@@ -5,4 +5,52 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_search">Search</string>
+
+    <string-array name="titlePlaceOption">
+        <item>Banks/ATM</item>
+        <item>Restaurants</item>
+        <item>Pharmacies</item>
+        <item>Supermarkets</item>
+        <item>Bars</item>
+        <item>Pubs/NightClubs</item>
+        <item>Hotels</item>
+        <item>hospitals</item>
+        <item>Movies</item>
+        <item>Park</item>
+        <item>Shopping Mall</item>
+        <item>CityBus Stop</item>
+        <item>Taxis</item>
+        <item>Station/Airport</item>
+        <item>Parking</item>
+        <item>Gas Station</item>
+        <item>Car Service</item>
+        <item>Gym</item>
+        <item>Police</item>
+        <item>Weather</item>
+    </string-array>
+
+    <array name="thumbPlaceOption">
+        <item>@mipmap/ic_launcher</item>
+        <item>@mipmap/ic_launcher</item>
+        <item>@mipmap/ic_launcher</item>
+        <item>@mipmap/ic_launcher</item>
+        <item>@mipmap/ic_launcher</item>
+        <item>@mipmap/ic_launcher</item>
+        <item>@mipmap/ic_launcher</item>
+        <item>@mipmap/ic_launcher</item>
+        <item>@mipmap/ic_launcher</item>
+        <item>@mipmap/ic_launcher</item>
+        <item>@mipmap/ic_launcher</item>
+        <item>@mipmap/ic_launcher</item>
+        <item>@mipmap/ic_launcher</item>
+        <item>@mipmap/ic_launcher</item>
+        <item>@mipmap/ic_launcher</item>
+        <item>@mipmap/ic_launcher</item>
+        <item>@mipmap/ic_launcher</item>
+        <item>@mipmap/ic_launcher</item>
+        <item>@mipmap/ic_launcher</item>
+        <item>@mipmap/ic_launcher</item>
+    </array>
+
+
 </resources>
