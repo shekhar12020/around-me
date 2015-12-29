@@ -1,4 +1,4 @@
-package com.shekhar.app.aroundme;
+package com.shekhar.app.aroundme.activity;
 
 import android.content.Intent;
 import android.content.res.TypedArray;
@@ -33,11 +33,19 @@ import com.google.android.gms.location.places.PlacePhotoResult;
 import com.google.android.gms.location.places.Places;
 import com.google.android.gms.location.places.ui.PlaceAutocomplete;
 import com.google.android.gms.location.places.ui.PlacePicker;
+import com.shekhar.app.aroundme.R;
 import com.shekhar.app.aroundme.adapter.PlaceOptionAdapter;
+import com.shekhar.app.aroundme.config.NearByPlaceApi;
+import com.shekhar.app.aroundme.config.ServiceGenerator;
 import com.shekhar.app.aroundme.model.PlaceOptionItem;
+import com.shekhar.app.aroundme.model.detail.PlaceDetailResponsee;
+import com.shekhar.app.aroundme.model.list.PlaceSearchResponse;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 public class MainActivity extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener,
@@ -88,8 +96,9 @@ public class MainActivity extends AppCompatActivity implements
         mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-
-        setPlaceOption(getResources().getStringArray(R.array.titlePlaceOption),getResources().obtainTypedArray(R.array.thumbPlaceOption));
+        setPlaceOption(getResources().getStringArray(R.array.titlePlaceOption), getResources().obtainTypedArray(R.array.thumbPlaceOption));
+        callNearByPlacesRequest();
+        callPlaceDetailsRequest();
 
     }
 
@@ -301,6 +310,43 @@ public class MainActivity extends AppCompatActivity implements
             optionItems.add(new PlaceOptionItem(titleList[i], iconList.getResourceId(i, -(i + 1))));
         }
         mRecyclerView.setAdapter(new PlaceOptionAdapter(getApplicationContext(), optionItems));
+    }
+
+
+    private void callNearByPlacesRequest(){
+        NearByPlaceApi nearByPlaceApi = ServiceGenerator.createService(NearByPlaceApi.class);
+
+        nearByPlaceApi.getNearByPlaces(
+                new retrofit.Callback<PlaceSearchResponse>() {
+                    @Override
+                    public void success(PlaceSearchResponse data, Response response) {
+                        Log.d("Success", "Response : Success " + data.getResults().get(0).getName());
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+                        Log.d("Success", "Response : Failure " + error.getMessage());
+                    }
+                });
+
+    }
+
+    private void callPlaceDetailsRequest(){
+        NearByPlaceApi nearByPlaceApi = ServiceGenerator.createService(NearByPlaceApi.class);
+
+        nearByPlaceApi.getPlaceDetails(
+                new retrofit.Callback<PlaceDetailResponsee>() {
+                    @Override
+                    public void success(PlaceDetailResponsee data, Response response) {
+                        Log.d("Success", "Response : Success " + data.getResult().getFormattedAddress());
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+                        Log.d("Success", "Response : Failure " + error.getMessage());
+                    }
+                });
+
     }
 
 }

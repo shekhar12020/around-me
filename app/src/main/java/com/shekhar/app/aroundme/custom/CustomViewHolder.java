@@ -1,9 +1,11 @@
-package com.shekhar.app.aroundme;
+package com.shekhar.app.aroundme.custom;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.shekhar.app.aroundme.R;
 
 public class CustomViewHolder extends RecyclerView.ViewHolder {
         protected ImageView imageView;

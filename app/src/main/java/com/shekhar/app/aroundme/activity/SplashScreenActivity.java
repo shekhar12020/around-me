@@ -1,4 +1,4 @@
-package com.shekhar.app.aroundme;
+package com.shekhar.app.aroundme.activity;
 
 import android.Manifest;
 import android.app.Activity;
@@ -28,6 +28,7 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResult;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
+import com.shekhar.app.aroundme.R;
 
 public class SplashScreenActivity extends AppCompatActivity implements
         ConnectionCallbacks,

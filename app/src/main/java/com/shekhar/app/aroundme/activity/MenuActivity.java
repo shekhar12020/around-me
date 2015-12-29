@@ -1,4 +1,4 @@
-package com.shekhar.app.aroundme;
+package com.shekhar.app.aroundme.activity;
 
 import android.os.Build;
 import android.os.Bundle;
@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+
+import com.shekhar.app.aroundme.R;
 
 public class MenuActivity extends AppCompatActivity {
 

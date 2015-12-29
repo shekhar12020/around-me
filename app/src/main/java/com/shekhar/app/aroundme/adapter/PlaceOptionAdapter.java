@@ -6,7 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.shekhar.app.aroundme.PlaceOptionListRowHolder;
+import com.shekhar.app.aroundme.custom.PlaceOptionListRowHolder;
 import com.shekhar.app.aroundme.R;
 import com.shekhar.app.aroundme.model.PlaceOptionItem;
 
