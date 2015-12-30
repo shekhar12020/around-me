@@ -6,6 +6,7 @@
 
     <application
         android:allowBackup="true"
+        android:name="com.shekhar.app.aroundme.global.GlobalData"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
@@ -23,12 +24,13 @@
         <activity android:name=".activity.MainActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
 
-        <activity android:name=".activity.MenuActivity"
+        <activity android:name=".activity.PlaceSearchResultActivity"
+            android:label="NearBy Places"
             android:theme="@style/AppTheme.NoActionBar"/>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyDgo1rnhvqTP-87oCSyYROPtw_KMcwhYj4"/>
+            android:value="@string/api_key_map"/>
 
     </application>
 

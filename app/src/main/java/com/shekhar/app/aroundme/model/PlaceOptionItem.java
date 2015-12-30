@@ -3,6 +3,7 @@ package com.shekhar.app.aroundme.model;
 public class PlaceOptionItem {
 
     private String title;
+    private String value;
     private String item_new;
     private int icon;
 
@@ -10,9 +11,10 @@ public class PlaceOptionItem {
 
     }
 
-    public PlaceOptionItem(String title, int icon) {
+    public PlaceOptionItem(String title,String value, int icon) {
         this.title = title;
         this.icon = icon;
+        this.value=value;
     }
 
     public String getTitle() {
@@ -21,6 +23,14 @@ public class PlaceOptionItem {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
     }
 
     public int getIcon() {

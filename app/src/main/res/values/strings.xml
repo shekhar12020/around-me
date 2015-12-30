@@ -6,27 +6,53 @@
 
     <string name="action_search">Search</string>
 
+    <string name="error_no_internet_connection">Please check your internet connection.</string>
+    <string name="error_no_data_found">No data found!</string>
+
     <string-array name="titlePlaceOption">
         <item>Banks/ATM</item>
         <item>Restaurants</item>
         <item>Pharmacies</item>
         <item>Supermarkets</item>
         <item>Bars</item>
-        <item>Pubs/NightClubs</item>
+        <item>Pubs/Night Clubs</item>
         <item>Hotels</item>
         <item>hospitals</item>
         <item>Movies</item>
         <item>Park</item>
         <item>Shopping Mall</item>
-        <item>CityBus Stop</item>
+        <item>City Bus Stop</item>
         <item>Taxis</item>
         <item>Station/Airport</item>
         <item>Parking</item>
-        <item>Gas Station</item>
+        <item>Petrol/Gas Station</item>
         <item>Car Service</item>
         <item>Gym</item>
         <item>Police</item>
-        <item>Weather</item>
+        <item>Theme Park</item>
+    </string-array>
+
+    <string-array name="valuePlaceOption">
+        <item>atm&#124;bank</item>
+        <item>restaurant&#124;cafe</item>
+        <item>pharmacy</item>
+        <item>grocery_or_supermarket&#124;home_goods_store</item>
+        <item>bar</item>
+        <item>pubs&#124;night_club</item>
+        <item>restaurant&#124;food&#124;cafe</item>
+        <item>hospital</item>
+        <item>movie_theater</item>
+        <item>park</item>
+        <item>shopping_mall</item>
+        <item>bus_station</item>
+        <item>taxi_stand</item>
+        <item>train_station&#124;airport</item>
+        <item>parking</item>
+        <item>gas_station</item>
+        <item>car_wash&#124;car_repair&#124;car_dealer</item>
+        <item>gym</item>
+        <item>police</item>
+        <item>amusement_park</item>
     </string-array>
 
     <array name="thumbPlaceOption">
@@ -51,6 +77,9 @@
         <item>@mipmap/ic_launcher</item>
         <item>@mipmap/ic_launcher</item>
     </array>
+
+    <string name="api_key_map">AIzaSyDgo1rnhvqTP-87oCSyYROPtw_KMcwhYj4</string>
+    <string name="api_key_server">AIzaSyAhLwqfjhbZrBVApG-0OwmrojqnC1mP66w</string>
 
 
 </resources>

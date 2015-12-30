@@ -4,16 +4,18 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class PlaceSearchResponse {
 
 @SerializedName("html_attributions")
 @Expose
-private List<Object> htmlAttributions = new ArrayList<Object>();
+private ArrayList<Object> htmlAttributions = new ArrayList<Object>();
+@SerializedName("next_page_token")
+@Expose
+private String nextPageToken;
 @SerializedName("results")
 @Expose
-private List<Result> results = new ArrayList<Result>();
+private ArrayList<Result> results = new ArrayList<Result>();
 @SerializedName("status")
 @Expose
 private String status;
@@ -23,7 +25,7 @@ private String status;
 * @return
 * The htmlAttributions
 */
-public List<Object> getHtmlAttributions() {
+public ArrayList<Object> getHtmlAttributions() {
 return htmlAttributions;
 }
 
@@ -32,8 +34,26 @@ return htmlAttributions;
 * @param htmlAttributions
 * The html_attributions
 */
-public void setHtmlAttributions(List<Object> htmlAttributions) {
+public void setHtmlAttributions(ArrayList<Object> htmlAttributions) {
 this.htmlAttributions = htmlAttributions;
+}
+
+/**
+* 
+* @return
+* The nextPageToken
+*/
+public String getNextPageToken() {
+return nextPageToken;
+}
+
+/**
+* 
+* @param nextPageToken
+* The next_page_token
+*/
+public void setNextPageToken(String nextPageToken) {
+this.nextPageToken = nextPageToken;
 }
 
 /**
@@ -41,7 +61,7 @@ this.htmlAttributions = htmlAttributions;
 * @return
 * The results
 */
-public List<Result> getResults() {
+public ArrayList<Result> getResults() {
 return results;
 }
 
@@ -50,7 +70,7 @@ return results;
 * @param results
 * The results
 */
-public void setResults(List<Result> results) {
+public void setResults(ArrayList<Result> results) {
 this.results = results;
 }
 
@@ -71,6 +91,5 @@ return status;
 public void setStatus(String status) {
 this.status = status;
 }
-
 
 }

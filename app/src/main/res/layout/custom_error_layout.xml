@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent"
+    android:padding="10dp" >
+
+    <TextView
+        android:id="@+id/no_data_found"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:padding="5dp"
+        android:visibility="gone"
+        android:drawablePadding="10dp"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:textColor="@color/colorPrimary"
+        android:gravity="center_horizontal"
+        android:drawableTop="@drawable/bw_no_data_found"
+        android:text="@string/error_no_data_found"/>
+</RelativeLayout>

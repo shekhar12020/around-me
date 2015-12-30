@@ -5,6 +5,7 @@ import com.shekhar.app.aroundme.model.list.PlaceSearchResponse;
 
 import retrofit.Callback;
 import retrofit.http.GET;
+import retrofit.http.Query;
 
 /**
  * Created by shekhar on 29/12/15.
@@ -12,8 +13,13 @@ import retrofit.http.GET;
 public interface NearByPlaceApi {
 
     //GET NEAR BY PLACES
-    @GET("/maps/api/place/nearbysearch/json?location=18.559658,73.779937&type=atm&radius=500&key=AIzaSyAhLwqfjhbZrBVApG-0OwmrojqnC1mP66w")
+    @GET("/maps/api/place/nearbysearch/json")
     void getNearByPlaces(
+            @Query("key") String key,
+            @Query("location") String lat_long,
+            @Query("types") String type,
+            @Query("radius") String radius,
+            @Query("rankBy") String rankBy,
             Callback<PlaceSearchResponse> callback);
 
 

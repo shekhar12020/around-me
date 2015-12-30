@@ -39,10 +39,8 @@ import com.shekhar.app.aroundme.config.NearByPlaceApi;
 import com.shekhar.app.aroundme.config.ServiceGenerator;
 import com.shekhar.app.aroundme.model.PlaceOptionItem;
 import com.shekhar.app.aroundme.model.detail.PlaceDetailResponsee;
-import com.shekhar.app.aroundme.model.list.PlaceSearchResponse;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -50,7 +48,7 @@ import retrofit.client.Response;
 public class MainActivity extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener,
         GoogleApiClient.ConnectionCallbacks,
-        GoogleApiClient.OnConnectionFailedListener{
+        GoogleApiClient.OnConnectionFailedListener {
 
 
     private String TAG = "MainActivity";
@@ -60,9 +58,7 @@ public class MainActivity extends AppCompatActivity implements
     protected GoogleApiClient mGoogleApiClient;
     private ImageView placePhoto;
 
-    private List<PlaceOptionItem> feedItemList = new ArrayList<PlaceOptionItem>();
     private RecyclerView mRecyclerView;
-    private PlaceOptionAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,8 +73,7 @@ public class MainActivity extends AppCompatActivity implements
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-               callPlacePicker();
+                callPlacePicker();
             }
         });
 
@@ -91,14 +86,15 @@ public class MainActivity extends AppCompatActivity implements
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        placePhoto=(ImageView)findViewById(R.id.placePhoto);
+        placePhoto = (ImageView) findViewById(R.id.placePhoto);
 
         mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        setPlaceOption(getResources().getStringArray(R.array.titlePlaceOption), getResources().obtainTypedArray(R.array.thumbPlaceOption));
-        callNearByPlacesRequest();
-        callPlaceDetailsRequest();
+        setPlaceOption(
+                getResources().getStringArray(R.array.titlePlaceOption),
+                getResources().getStringArray(R.array.valuePlaceOption),
+                getResources().obtainTypedArray(R.array.thumbPlaceOption));
 
     }
 
@@ -153,7 +149,7 @@ public class MainActivity extends AppCompatActivity implements
     }
 
 
-    private void callPlacePicker(){
+    private void callPlacePicker() {
 
         PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
         try {
@@ -181,7 +177,7 @@ public class MainActivity extends AppCompatActivity implements
             } else if (resultCode == RESULT_CANCELED) {
                 // The user canceled the operation.
             }
-        }else if (requestCode == PLACE_PICKER_REQUEST) {
+        } else if (requestCode == PLACE_PICKER_REQUEST) {
             if (resultCode == RESULT_OK) {
                 Place place = PlacePicker.getPlace(data, this);
                 Log.d(TAG, "place.getName() : " + place.getName());
@@ -258,17 +254,19 @@ public class MainActivity extends AppCompatActivity implements
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        if (id == R.id.nav_location) {
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_direction) {
 
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.nav_favorite) {
+
+        } else if (id == R.id.nav_recent) {
+
+        } else if (id == R.id.nav_settings) {
 
         } else if (id == R.id.nav_share) {
 
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.nav_feedback) {
 
         }
 
@@ -302,36 +300,19 @@ public class MainActivity extends AppCompatActivity implements
 
     }
 
-    public void setPlaceOption(String[] titleList, TypedArray iconList) {
+    public void setPlaceOption(String[] titleList,String[] valueList, TypedArray iconList) {
 
-        ArrayList<PlaceOptionItem>  optionItems = new ArrayList<>();
+        ArrayList<PlaceOptionItem> optionItems = new ArrayList<>();
 
         for (int i = 0; i < titleList.length; i++) {
-            optionItems.add(new PlaceOptionItem(titleList[i], iconList.getResourceId(i, -(i + 1))));
+            optionItems.add(new PlaceOptionItem(titleList[i],valueList[i], iconList.getResourceId(i, -(i + 1))));
         }
-        mRecyclerView.setAdapter(new PlaceOptionAdapter(getApplicationContext(), optionItems));
+        mRecyclerView.setAdapter(new PlaceOptionAdapter(MainActivity.this, optionItems));
     }
 
 
-    private void callNearByPlacesRequest(){
-        NearByPlaceApi nearByPlaceApi = ServiceGenerator.createService(NearByPlaceApi.class);
 
-        nearByPlaceApi.getNearByPlaces(
-                new retrofit.Callback<PlaceSearchResponse>() {
-                    @Override
-                    public void success(PlaceSearchResponse data, Response response) {
-                        Log.d("Success", "Response : Success " + data.getResults().get(0).getName());
-                    }
-
-                    @Override
-                    public void failure(RetrofitError error) {
-                        Log.d("Success", "Response : Failure " + error.getMessage());
-                    }
-                });
-
-    }
-
-    private void callPlaceDetailsRequest(){
+    private void callPlaceDetailsRequest() {
         NearByPlaceApi nearByPlaceApi = ServiceGenerator.createService(NearByPlaceApi.class);
 
         nearByPlaceApi.getPlaceDetails(

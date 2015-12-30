@@ -29,11 +29,12 @@ import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResult;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.shekhar.app.aroundme.R;
+import com.shekhar.app.aroundme.global.GlobalData;
 
 public class SplashScreenActivity extends AppCompatActivity implements
         ConnectionCallbacks,
-        OnConnectionFailedListener,
         LocationListener,
+        OnConnectionFailedListener,
         ResultCallback<LocationSettingsResult> {
 
     public static final long UPDATE_INTERVAL_IN_MILLISECONDS = 10000;
@@ -163,7 +164,6 @@ public class SplashScreenActivity extends AppCompatActivity implements
         switch (status.getStatusCode()) {
             case LocationSettingsStatusCodes.SUCCESS:
                 Log.i(TAG, "All location settings are satisfied.");
-                startLocationUpdates();
                 break;
             case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
                 Log.i(TAG, "Location settings are not satisfied. Show the user a dialog to" +
@@ -192,7 +192,6 @@ public class SplashScreenActivity extends AppCompatActivity implements
                 switch (resultCode) {
                     case Activity.RESULT_OK:
                         Log.i(TAG, "User agreed to make required location settings changes.");
-                        startLocationUpdates();
                         break;
                     case Activity.RESULT_CANCELED:
                         Log.i(TAG, "User chose not to make required location settings changes.");
@@ -203,50 +202,10 @@ public class SplashScreenActivity extends AppCompatActivity implements
         }
     }
 
-    /**
-     * Requests location updates from the FusedLocationApi.
-     */
-    protected void startLocationUpdates() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
-        LocationServices.FusedLocationApi.requestLocationUpdates(
-                mGoogleApiClient,
-                mLocationRequest,
-                this
-        ).setResultCallback(new ResultCallback<Status>() {
-            @Override
-            public void onResult(Status status) {
-                mRequestingLocationUpdates = true;
-            }
-        });
-
-    }
-
     @Override
     protected void onStart() {
         super.onStart();
         mGoogleApiClient.connect();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (mGoogleApiClient.isConnected() && mRequestingLocationUpdates) {
-            startLocationUpdates();
-        }
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
     }
 
     @Override
@@ -271,18 +230,15 @@ public class SplashScreenActivity extends AppCompatActivity implements
                 return;
             }
             mCurrentLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+            Log.i(TAG, "location.getLatitude() : " + mCurrentLocation.getLatitude() + "\n" + "location.getLongitude() : " + mCurrentLocation.getLongitude());
+
+            GlobalData.getInstance().setCurrentLatitude(String.valueOf(mCurrentLocation.getLatitude()));
+            GlobalData.getInstance().setCurrentLongitude(String.valueOf(mCurrentLocation.getLongitude()));
+
+            Intent i = new Intent(this, MainActivity.class);
+            startActivity(i);
+            finish();
         }
-    }
-
-    @Override
-    public void onLocationChanged(Location location) {
-        mCurrentLocation = location;
-
-        Log.i(TAG, "location.getLatitude() : " + location.getLatitude() + "\n" + "location.getLongitude() : " + location.getLongitude());
-
-        Intent i = new Intent(this, MainActivity.class);
-        startActivity(i);
-        finish();
     }
 
     @Override
@@ -291,9 +247,12 @@ public class SplashScreenActivity extends AppCompatActivity implements
     }
 
     @Override
-
     public void onConnectionFailed(ConnectionResult result) {
         Log.i(TAG, "Connection failed: ConnectionResult.getErrorCode() = " + result.getErrorCode());
     }
 
+    @Override
+    public void onLocationChanged(Location location) {
+
+    }
 }
