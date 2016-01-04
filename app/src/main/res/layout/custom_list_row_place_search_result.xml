@@ -16,29 +16,29 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingStart="5dp"
-        android:paddingEnd="7dp"
-        android:paddingTop="5dp">
+        android:padding="5dp">
 
         <ImageView
             android:id="@+id/thumbnail"
-            android:layout_width="80dp"
-            android:layout_height="105dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_gravity="center_vertical"
             android:contentDescription="@string/app_name"
-            android:padding="10dp"
+            android:scaleType="centerCrop"
+            android:background="@color/colorLightGray"
             android:src="@mipmap/ic_launcher" />
 
         <TextView
             android:id="@+id/title"
+            android:layout_marginTop="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
+            android:layout_marginBottom="3dp"
             android:layout_marginStart="10dp"
             android:layout_toEndOf="@+id/thumbnail"
             android:gravity="center_vertical|start"
             android:textColor="@android:color/black"
-            android:textSize="17sp" />
+            android:textSize="16sp" />
 
         <LinearLayout
             android:id="@+id/rating_layout"
@@ -67,6 +67,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/rating_layout"
             android:layout_marginStart="10dp"
+            android:maxLines="3"
+            android:ellipsize="end"
             android:layout_toEndOf="@+id/thumbnail"
             android:gravity="center_vertical|start"
             android:textColor="@android:color/darker_gray"

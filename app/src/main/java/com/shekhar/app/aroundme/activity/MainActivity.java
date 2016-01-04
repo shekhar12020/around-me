@@ -27,23 +27,14 @@ import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.AutocompleteFilter;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.PlaceBuffer;
-import com.google.android.gms.location.places.PlacePhotoMetadataBuffer;
-import com.google.android.gms.location.places.PlacePhotoMetadataResult;
-import com.google.android.gms.location.places.PlacePhotoResult;
 import com.google.android.gms.location.places.Places;
 import com.google.android.gms.location.places.ui.PlaceAutocomplete;
 import com.google.android.gms.location.places.ui.PlacePicker;
 import com.shekhar.app.aroundme.R;
 import com.shekhar.app.aroundme.adapter.PlaceOptionAdapter;
-import com.shekhar.app.aroundme.config.NearByPlaceApi;
-import com.shekhar.app.aroundme.config.ServiceGenerator;
 import com.shekhar.app.aroundme.model.PlaceOptionItem;
-import com.shekhar.app.aroundme.model.detail.PlaceDetailResponsee;
 
 import java.util.ArrayList;
-
-import retrofit.RetrofitError;
-import retrofit.client.Response;
 
 public class MainActivity extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener,
@@ -117,17 +108,12 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
+        int id = item.getItemId();
         if (id == R.id.action_search) {
             findPlace();
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -147,7 +133,6 @@ public class MainActivity extends AppCompatActivity implements
             e.printStackTrace();
         }
     }
-
 
     private void callPlacePicker() {
 
@@ -205,50 +190,16 @@ public class MainActivity extends AppCompatActivity implements
                 });
     }
 
-    private ResultCallback<PlacePhotoResult> mDisplayPhotoResultCallback
-            = new ResultCallback<PlacePhotoResult>() {
-        @Override
-        public void onResult(PlacePhotoResult placePhotoResult) {
-            if (!placePhotoResult.getStatus().isSuccess()) {
-                return;
-            }
-            placePhoto.setImageBitmap(placePhotoResult.getBitmap());
+    public void setPlaceOption(String[] titleList,String[] valueList, TypedArray iconList) {
 
-            Log.d(TAG, "placePhoto : 1");
+        ArrayList<PlaceOptionItem> optionItems = new ArrayList<>();
 
+        for (int i = 0; i < titleList.length; i++) {
+            optionItems.add(new PlaceOptionItem(titleList[i],valueList[i], iconList.getResourceId(i, -(i + 1))));
         }
-    };
-
-    /**
-     * Load a bitmap from the photos API asynchronously
-     * by using buffers and result callbacks.
-     */
-    private void placePhotosAsync(String placeId) {
-        Places.GeoDataApi.getPlacePhotos(mGoogleApiClient, placeId)
-                .setResultCallback(new ResultCallback<PlacePhotoMetadataResult>() {
-
-
-                    @Override
-                    public void onResult(PlacePhotoMetadataResult photos) {
-                        if (!photos.getStatus().isSuccess()) {
-                            return;
-                        }
-
-                        PlacePhotoMetadataBuffer photoMetadataBuffer = photos.getPhotoMetadata();
-                        Log.d(TAG, "SIZE : " + photoMetadataBuffer.getCount());
-                        if (photoMetadataBuffer.getCount() > 0) {
-                            // Display the first bitmap in an ImageView in the size of the view
-                            photoMetadataBuffer.get(0)
-                                    .getScaledPhoto(mGoogleApiClient, placePhoto.getWidth(),
-                                            placePhoto.getHeight())
-                                    .setResultCallback(mDisplayPhotoResultCallback);
-                        }
-                        photoMetadataBuffer.release();
-                    }
-                });
+        mRecyclerView.setAdapter(new PlaceOptionAdapter(MainActivity.this, optionItems));
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
@@ -297,36 +248,6 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
-
-    }
-
-    public void setPlaceOption(String[] titleList,String[] valueList, TypedArray iconList) {
-
-        ArrayList<PlaceOptionItem> optionItems = new ArrayList<>();
-
-        for (int i = 0; i < titleList.length; i++) {
-            optionItems.add(new PlaceOptionItem(titleList[i],valueList[i], iconList.getResourceId(i, -(i + 1))));
-        }
-        mRecyclerView.setAdapter(new PlaceOptionAdapter(MainActivity.this, optionItems));
-    }
-
-
-
-    private void callPlaceDetailsRequest() {
-        NearByPlaceApi nearByPlaceApi = ServiceGenerator.createService(NearByPlaceApi.class);
-
-        nearByPlaceApi.getPlaceDetails(
-                new retrofit.Callback<PlaceDetailResponsee>() {
-                    @Override
-                    public void success(PlaceDetailResponsee data, Response response) {
-                        Log.d("Success", "Response : Success " + data.getResult().getFormattedAddress());
-                    }
-
-                    @Override
-                    public void failure(RetrofitError error) {
-                        Log.d("Success", "Response : Failure " + error.getMessage());
-                    }
-                });
 
     }
 

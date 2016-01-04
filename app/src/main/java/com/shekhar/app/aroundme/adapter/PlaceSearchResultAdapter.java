@@ -36,10 +36,18 @@ public class PlaceSearchResultAdapter extends RecyclerView.Adapter<PlaceSearchRe
     public void onBindViewHolder(PlaceSearchResultViewHolder listRowHolder, int i) {
         Result item = resultList.get(i);
 
-        Picasso.with(mContext).load(item.getIcon())
-                .placeholder(R.mipmap.ic_launcher)
-                .error(R.mipmap.ic_launcher)
-                .into(listRowHolder.thumbnail);
+
+        if (item.getPhotos()!=null && item.getPhotos().size()>0 && item.getPhotos().get(0).getPhotoReference()!=null){
+            Picasso.with(mContext).load("https://maps.googleapis.com/maps/api/place/photo?maxwidth=200&photoreference="+item.getPhotos().get(0).getPhotoReference()+"&key="+mContext.getString(R.string.api_key_server))
+                    .placeholder(R.mipmap.ic_launcher)
+                    .error(R.mipmap.ic_launcher)
+                    .into(listRowHolder.thumbnail);
+        }else{
+            Picasso.with(mContext).load(item.getIcon())
+                    .placeholder(R.mipmap.ic_launcher)
+                    .error(R.mipmap.ic_launcher)
+                    .into(listRowHolder.thumbnail);
+        }
 
         listRowHolder.title.setText(item.getName());
         listRowHolder.address.setText(item.getVicinity());
